@@ -31,3 +31,8 @@
     transform: rotate(360deg);
   }
 }
+
+.tableau {
+  background-color: rgba(250, 244, 244, 0.7);
+}
+ 
