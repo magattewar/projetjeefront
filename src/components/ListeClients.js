@@ -42,7 +42,7 @@ class ListeClients extends Component {
                     <tbody>
                     {
                             this.state.liste.map(client => <tr key={client.id}>
-                                <td>{client.nom}</td> <td>{client.cni}</td><td>{client.cni}</td>
+                                <td>{client.nom}</td> <td>{client.cni}</td><td>{client.montantdu}</td>
                                 <td><button class="btn btn-success btn-sm">Facturer</button></td>
                             </tr>)
                         }

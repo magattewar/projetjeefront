@@ -7,6 +7,9 @@ import axios from 'axios'
 import ListeClients from './components/ListeClients';
 import ListeBailleurs from './components/ListeBailleurs'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import Facturation from './components/Facturation'
+import { PDFViewer } from '@react-pdf/renderer';
+
  
 class App extends Component {
 
@@ -115,7 +118,8 @@ class App extends Component {
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More +</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                 <button class="dropdown-item" name="listebailleurs"  >Liste des Bailleurs</button>
-                <a class="dropdown-item" href="#">Credit Client</a>
+                <Link class="dropdown-item" to="/facturer">Facturer</Link>
+
                 <a class="dropdown-item" href="#">Debit Bailleur</a>
                 </div>
             </li>
@@ -131,6 +135,7 @@ class App extends Component {
       <Route exact path="/" render={props => this.state.connected ? <Accueil /> : <Connexion connecter = {this.connecter} />}/>
       <Route path="/clients" render={props => this.state.connected ? <ListeClients /> : <Connexion connecter = {this.connecter} />}/>
       <Route path="/bailleurs" render={props => this.state.connected ? <ListeBailleurs /> : <Connexion connecter = {this.connecter} />}/>
+      <Route path="/facturer" render={props => this.state.connected ? <div class="container"><PDFViewer><Facturation /></PDFViewer></div> : <Connexion connecter = {this.connecter} />}/>
       </div>
     </Router>);
 
@@ -199,3 +204,5 @@ class App extends Component {
 }
 
 export default App;
+
+
