@@ -5,10 +5,16 @@ class ListeClients extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            liste : []
+            liste : [],
+            dateFacturation : "",
+            nom : "",
+            cni : "",
+            type : "",
+            montant : ""
          };
 
-        this.listerClients()
+        this.listerClients();
+        this.facturer = this.facturer.bind(this);
     }
 
     listerClients = () => {
@@ -24,6 +30,27 @@ class ListeClients extends Component {
 
             })
     };
+
+    facturer = (e) => {
+        axios.get("http://localhost:8080/M1GLImmo/immo?action=facturer&id="+e.target.id)
+        .then(response => {
+            console.log(response.data);
+            this.setState({
+                dateFacturation : response.data.dateFacturation,
+                nom : response.data.nom,
+                cni : response.data.cni,
+                type : response.data.type,
+                montant : response.data.montant
+            })
+            console.log(this.state);
+        })
+        .catch(error => {
+            
+        });
+        //console.log(this.state.idclient);
+        //console.log(e.target.name);
+        this.props.facturer(e.target.id);
+    }
 
     render() {
         return (
@@ -43,7 +70,7 @@ class ListeClients extends Component {
                     {
                             this.state.liste.map(client => <tr key={client.id}>
                                 <td>{client.nom}</td> <td>{client.cni}</td><td>{client.montantdu}</td>
-                                <td><button class="btn btn-success btn-sm">Facturer</button></td>
+                                <td><button class="btn btn-success btn-sm" id={client.id} onClick={this.facturer}>Facturer</button></td>
                             </tr>)
                         }
                     </tbody>

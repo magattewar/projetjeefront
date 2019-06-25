@@ -19,7 +19,14 @@ class App extends Component {
     this.state = {
       connected : false,
       listeBiens : [],
-      lien : "accueil"
+      lien : "accueil",
+      prenom : "magatte",
+      nom : "war",
+      age : 25,
+      date : "",
+      cni : "",
+      adresse : "",
+      type : "mensualité"
     };
 
     //this.checkConnected()
@@ -41,6 +48,8 @@ class App extends Component {
         connected : true,
         lien : "accueil"
       })
+      let accueilLink = document.getElementById("accueilLink");
+      accueilLink.click();
     
   };
 
@@ -80,6 +89,14 @@ class App extends Component {
   }
 
 
+  facturer = (datas) => {
+    let facturelink = document.getElementById("facturelink");
+    
+    console.log("id dans Qpp"+datas.idclient);
+    this.setState({idclient : datas.idclient});
+    facturelink.click();
+  }
+
 
 
   /* checkConnected = () => {
@@ -101,7 +118,7 @@ class App extends Component {
     return(
     <Router>
       <div class="navbar navbar-expand-md navbar-dark bg-dark">
-        <Link class="navbar-brand" to="/">M1GLImmo</Link>
+        <Link class="navbar-brand" id="accueilLink" to="/">M1GLImmo</Link>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -118,7 +135,7 @@ class App extends Component {
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">More +</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                 <button class="dropdown-item" name="listebailleurs"  >Liste des Bailleurs</button>
-                <Link class="dropdown-item" to="/facturer">Facturer</Link>
+                <Link class="dropdown-item" to="/facturer" id="facturelink">Facturer</Link>
 
                 <a class="dropdown-item" href="#">Debit Bailleur</a>
                 </div>
@@ -133,9 +150,9 @@ class App extends Component {
       </div>
       <div class="row" className="App">
       <Route exact path="/" render={props => this.state.connected ? <Accueil /> : <Connexion connecter = {this.connecter} />}/>
-      <Route path="/clients" render={props => this.state.connected ? <ListeClients /> : <Connexion connecter = {this.connecter} />}/>
+      <Route path="/clients" render={props => this.state.connected ? <ListeClients facturer = {this.facturer} /> : <Connexion connecter = {this.connecter} />}/>
       <Route path="/bailleurs" render={props => this.state.connected ? <ListeBailleurs /> : <Connexion connecter = {this.connecter} />}/>
-      <Route path="/facturer" render={props => this.state.connected ? <div class="container"><PDFViewer><Facturation /></PDFViewer></div> : <Connexion connecter = {this.connecter} />}/>
+      <Route path="/facturer" render={props => this.state.connected ? <div class="container"><PDFViewer><Facturation etat={this.state} nom={"moussa"} idclient={this.state.idclient} /></PDFViewer></div> : <Connexion connecter = {this.connecter} />}/>
       </div>
     </Router>);
 

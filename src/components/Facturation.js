@@ -5,7 +5,7 @@ import { Page, Text, View, Document, StyleSheet } from '@react-pdf/renderer';
 
 const styles = StyleSheet.create({
     page: {
-      flexDirection: 'container',
+      flexDirection: 'row',
       backgroundColor: '#E4E4E4'
     },
     section: {
@@ -17,8 +17,22 @@ const styles = StyleSheet.create({
         margin: 10,
         padding: 10,
         flexDirection: 'row'
+    },
+    footer: {
+        textAlign: "right",
+        color : "blue",
+        fontSize : "5mm",
+        border : "0.05in"
     }
   });
+
+  axios.get("http://localhost:8080/M1GLImmo/immo?action=facturer&id=1")
+  .then(response => {
+
+  })
+  .catch(error => {
+      
+  })
   
 
 class Facturation extends Component {
@@ -27,44 +41,57 @@ class Facturation extends Component {
         this.state = { 
             prenom : "magatte",
             nom : "war",
-            age : 25
+            age : 25,
+            date : "",
+            cni : "",
+            adresse : "",
+            type : "mensualité"
+
          };
+         //console.log("id : "+props.idclient);
     }
     render() {
         return (
                 
            
                 <Document>
-                <Page size="A4" style={styles.page}>
-                <View style={styles.line}>
-                    <Text>Je m'appelle {this.state.prenom} {this.state.nom} et j'ai {this.state.age} ans </Text>
-                    <Text>Section #1a</Text>
-                </View>
-                <View style={styles.section}>
-                    <Text>Section #2</Text>
-                </View>
-                <View >
-                    <Text>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do
-                    eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-                    minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-                    aliquip ex ea commodo consequat. Duis aute irure dolor in
-                    reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-                    pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                    culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum
-                    dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                    incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                    commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                    velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-                    occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-                    mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur
-                    adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                    magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation
-                    ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                    irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-                    sunt in culpa qui officia deserunt mollit anim id est laborum.</Text>
-                </View>
+                <Page size="A4">
+                    <View style={styles.page}>
+                        <View style={styles.section}>
+                            <Text>Jee IMMO</Text>
+                            <Text>Dakar, Senegal</Text>
+                            <Text>jeeimmo@gmail.com</Text>
+                            <Text>le jj/mm/aaaa</Text>
+                        </View>
+
+                        <View style={styles.section}>
+                            <Text>nom : {this.props.etat.nom}</Text>
+                            <Text>cni : 2431456347657</Text>
+                            <Text>id : {this.props.idclient}</Text>
+                        </View>
+                    </View>
+                
+                
+                    <View style={styles.page}>
+                        <View style={styles.section}>
+                            <Text>date</Text>
+                            <Text>le jj//mm//aaa</Text>
+                        </View>
+
+                        <View style={styles.section}>
+                            <Text>Type</Text>
+                            <Text>{this.state.type}</Text>
+                        </View>
+
+                        <View style={styles.section}>
+                            <Text>Montant du</Text>
+                            <Text>3214554326</Text>
+                        </View>
+                    </View>
+                    <View style={styles.footer}>
+                        <Text>Fait a dakar</Text>
+                        <Text>jj//mm//aaaa</Text>
+                    </View>
                 </Page>
                 
             </Document>
