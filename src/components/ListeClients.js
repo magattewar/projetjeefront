@@ -6,24 +6,24 @@ class ListeClients extends Component {
         super(props);
         this.state = { 
             liste : [],
-            dateFacturation : "",
-            nom : "",
-            cni : "",
-            type : "",
-            montant : ""
+            idClient : 4
          };
 
+        
+        this.facturer2 = this.facturer2.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+        this.handleClick2 = this.handleClick2.bind(this);
         this.listerClients();
-        this.facturer = this.facturer.bind(this);
     }
 
     listerClients = () => {
         axios.get('http://localhost:8080/M1GLImmo/immo?action=listeclients')
             .then(response => {
                 //console.log(response)
-
+                
                 this.setState({
                     liste : response.data
+                    
                 })
             })
             .catch(error => {
@@ -31,25 +31,44 @@ class ListeClients extends Component {
             })
     };
 
-    facturer = (e) => {
+    handleClick2 = (event) => {
+        event.preventDefault();
+        console.log(event.target.id)
+        this.setState ({ idClient : event.target.id })
+        console.log(this.state)
+    };
+
+    facturer2 = (e) => {
+        let idc = e.target.id;
         axios.get("http://localhost:8080/M1GLImmo/immo?action=facturer&id="+e.target.id)
         .then(response => {
-            console.log(response.data);
-            this.setState({
-                dateFacturation : response.data.dateFacturation,
-                nom : response.data.nom,
-                cni : response.data.cni,
-                type : response.data.type,
-                montant : response.data.montant
-            })
-            console.log(this.state);
+            if(true){
+                //console.log(response.data.montant);
+                this.setState({ montant : response.data.montant,
+                idClient : idc });
+                console.log(this.state);
+                this.props.facturer(this.state);
+            }
+            
         })
         .catch(error => {
             
         });
         //console.log(this.state.idclient);
         //console.log(e.target.name);
-        this.props.facturer(e.target.id);
+        // this.setState({
+        //     idClient : 2
+        // });
+        // console.log("idc : "+idc)
+        // this.setState ({ idClient : 2 })
+        // console.log(this.state)
+                //this.props.facturer(this.state);
+    }
+
+    handleClick = (e) => {
+       
+        this.setState ({ idClient : 213 })
+        console.log(this.state)
     }
 
     render() {
@@ -70,7 +89,7 @@ class ListeClients extends Component {
                     {
                             this.state.liste.map(client => <tr key={client.id}>
                                 <td>{client.nom}</td> <td>{client.cni}</td><td>{client.montantdu}</td>
-                                <td><button class="btn btn-success btn-sm" id={client.id} onClick={this.facturer}>Facturer</button></td>
+                                <td><button class="btn btn-success btn-sm" id={client.id} onClick={this.facturer2}>Facturer</button></td>
                             </tr>)
                         }
                     </tbody>

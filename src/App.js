@@ -92,8 +92,8 @@ class App extends Component {
   facturer = (datas) => {
     let facturelink = document.getElementById("facturelink");
     
-    console.log("id dans Qpp"+datas.idclient);
-    this.setState({idclient : datas.idclient});
+    console.log("id dans Qpp"+ datas.idClient);
+    this.setState({idClient : datas.idClient});
     facturelink.click();
   }
 
@@ -152,7 +152,7 @@ class App extends Component {
       <Route exact path="/" render={props => this.state.connected ? <Accueil /> : <Connexion connecter = {this.connecter} />}/>
       <Route path="/clients" render={props => this.state.connected ? <ListeClients facturer = {this.facturer} /> : <Connexion connecter = {this.connecter} />}/>
       <Route path="/bailleurs" render={props => this.state.connected ? <ListeBailleurs /> : <Connexion connecter = {this.connecter} />}/>
-      <Route path="/facturer" render={props => this.state.connected ? <div class="container"><PDFViewer><Facturation etat={this.state} nom={"moussa"} idclient={this.state.idclient} /></PDFViewer></div> : <Connexion connecter = {this.connecter} />}/>
+      <Route path="/facturer" render={props => this.state.connected ? <div class="container"><PDFViewer><Facturation etat={this.state} nom={"moussa"} idClient={this.state.idClient} /></PDFViewer></div> : <Connexion connecter = {this.connecter} />}/>
       </div>
     </Router>);
 

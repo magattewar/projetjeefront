@@ -317,10 +317,13 @@ class Accueil extends Component{
         })
     }
 
+    // http://localhost:8080/M1GLImmo/immo?action=addclient&nom=moussa&cni=02137897493&telephone=7324895834
+
     handleAjoutClient = (e) => {
         axios.get("http://localhost:8080/M1GLImmo/immo?action=addclient&nom="
             +this.state.nomclient
             +"&cni="+this.state.cniclient
+            +"&telephone="+this.state.telclient
             )
             .then(response => {
                 console.log(response)
@@ -329,6 +332,8 @@ class Accueil extends Component{
             .catch(error => {
                 console.log(error)
             })
+
+            console.log(this.state);
     }
 
     // style="background: rgba(255,255,255,0.5)"
@@ -574,8 +579,13 @@ class Accueil extends Component{
                                     <p class="alert alert-warning" id="alertcniclient2" hidden="true" >CNI deja existant</p>
                                 </div>
 
+                                <div class="form-label-group">
+                                    <label for="inputEmail">Telephone du Client</label>
+                                    <input type="number" id="inputEmail" name="telclient" class="form-control" placeholder="TEL" onChange={this.handleClient}  required />
+                                </div>
 
-                                <button class="btn btn-success" type="submit" id="btnajouterclient2" onClick={this.handleAjoutClient} data-dismiss="modal">Ajouter Client</button>
+
+                                <button class="btn btn-success" type="submit" onClick={this.handleAjoutClient} id="btnajouterclient2" data-dismiss="modal">Ajouter Client</button>
                                 <button class="btn btn-warning" data-dismiss="modal" >Annuler</button>
   
                                 </form>

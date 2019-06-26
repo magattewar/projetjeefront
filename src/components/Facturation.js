@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
     section: {
       margin: 10,
       padding: 10,
-      flexGrow: 1
+      flexGrow: 1,
     }, 
     ligne: {
         margin: 10,
@@ -20,9 +20,15 @@ const styles = StyleSheet.create({
     },
     footer: {
         textAlign: "right",
-        color : "blue",
         fontSize : "5mm",
-        border : "0.05in"
+    },title: {
+        textAlign : "center"
+    }, sectionTotal : {
+        margin: 10,
+      padding: 10,
+      flexGrow: 1,
+      color : "red"
+
     }
   });
 
@@ -49,7 +55,36 @@ class Facturation extends Component {
 
          };
          //console.log("id : "+props.idclient);
+         this.facture();
     }
+
+    facture = (e) => {
+        axios.get("http://localhost:8080/M1GLImmo/immo?action=facturer&id="+this.props.etat.idClient)
+        .then(response => {
+            // if(true){
+            //     //console.log(response.data.montant);
+            //     this.setState({ montant : response.data.montant,
+            //     idClient : idc });
+            //     console.log(this.state);
+            //     this.props.facturer(this.state);
+            // }
+            //console.log(response);
+
+            this.setState({
+                nom : response.data.nom,
+                type : response.data.type,
+                montant : response.data.montant,
+                cni : response.data.cni,
+                date : response.data.dateFacturation,
+                telephone : response.data.telephone
+            })
+            
+        })
+        .catch(error => {
+            
+        });
+    }
+
     render() {
         return (
                 
@@ -61,36 +96,36 @@ class Facturation extends Component {
                             <Text>Jee IMMO</Text>
                             <Text>Dakar, Senegal</Text>
                             <Text>jeeimmo@gmail.com</Text>
-                            <Text>le jj/mm/aaaa</Text>
                         </View>
 
                         <View style={styles.section}>
-                            <Text>nom : {this.props.etat.nom}</Text>
-                            <Text>cni : 2431456347657</Text>
-                            <Text>id : {this.props.idclient}</Text>
+                            <Text>Nom : {this.props.nom}</Text>
+                            <Text>Cni : {this.state.cni}</Text>
+                            
+                            <Text>Telephone : {this.state.telephone}</Text>
                         </View>
                     </View>
                 
+                    <View style={styles.title}>
+                    <Text>Cumul de toutes les mensualités non payées.</Text>
+                    </View>
                 
                     <View style={styles.page}>
-                        <View style={styles.section}>
-                            <Text>date</Text>
-                            <Text>le jj//mm//aaa</Text>
-                        </View>
+                        
 
                         <View style={styles.section}>
                             <Text>Type</Text>
                             <Text>{this.state.type}</Text>
                         </View>
 
-                        <View style={styles.section}>
+                        <View style={styles.sectionTotal}>
                             <Text>Montant du</Text>
-                            <Text>3214554326</Text>
+                            <Text>{this.state.montant}</Text>
                         </View>
                     </View>
                     <View style={styles.footer}>
                         <Text>Fait a dakar</Text>
-                        <Text>jj//mm//aaaa</Text>
+                        <Text>{this.state.date}</Text>
                     </View>
                 </Page>
                 
